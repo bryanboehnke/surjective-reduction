@@ -1,0 +1,93 @@
+
+# Elliptic curves downloaded from the LMFDB on 09 December 2025.
+# Search link: https://www.lmfdb.org/EllipticCurve/Q/?rank=5&showcol=mwgens&hidecol=lmfdb_iso.rank.torsion_structure.cm_discriminant
+# Query "{'rank': 5}" returned 19 curves, sorted by conductor.
+
+# Each entry in the following data list has the form:
+#    [Label, Conductor, Weierstrass equation, MW-generators]
+# For more details, see the definitions at the bottom of the file.
+
+
+
+"19047851.a1"	19047851	[0, 0, 1, -79, 342]	[[3, 11], [7, 11], [10, 23], [-6, 24], [4, 9]]
+"64921931.a1"	64921931	[0, 0, 1, -169, 930]	[[8, 9], [7, 9], [6, 11], [0, 30], [20, 74]]
+"67445803.a1"	67445803	[0, 1, 1, -30, 390]	[[2, 18], [-9, 3], [-7, 17], [-4, 21], [15, 59]]
+"74129723.a1"	74129723	[0, 0, 1, -301, 2052]	[[10, 6], [9, 8], [8, 12], [11, 8], [19, 56]]
+"84602123.a1"	84602123	[0, 0, 1, -457, 3786]	[[11, 9], [14, 11], [15, 17], [12, 5], [13, 6]]
+"106974317.a1"	106974317	[1, 0, 0, -575, 5236]	[[13, -6], [15, -1], [12, 4], [16, 6], [11, 11]]
+"111061427.a1"	111061427	[1, 0, 0, -245, 1366]	[[6, 8], [5, 14], [7, -6], [15, 26], [13, 14]]
+"117138251.a1"	117138251	[0, -1, 1, -82, 622]	[[4, 18], [7, 18], [-4, 29], [11, 30], [2, 21]]
+"122882843.a1"	122882843	[0, -1, 1, -400, 3262]	[[11, 8], [13, 9], [14, 14], [7, 27], [20, 53]]
+"138437407.a1"	138437407	[1, -1, 1, -147, 420]	[[2, 10], [11, 1], [0, 20], [-6, 35], [3, -3]]
+"161759189.a1"	161759189	[0, 1, 1, -142, 182]	[[0, 13], [11, 8], [-2, 21], [1, 6], [13, 26]]
+"169624549.a1"	169624549	[0, 0, 1, -139, 72]	[[-1, 14], [-7, 26], [0, 8], [-2, 18], [-12, 3]]
+"177858971.a1"	177858971	[0, 0, 1, -679, 6840]	[[16, 8], [11, 26], [13, 14], [17, 14], [15, 5]]
+"185220011.a1"	185220011	[0, -1, 1, -482, 4290]	[[12, 9], [9, 24], [14, 9], [15, 14], [3, 53]]
+"214371643.a1"	214371643	[0, 1, 1, -100, 770]	[[7, 21], [-1, 29], [11, 33], [22, 98], [-4, 33]]
+"232113701.a1"	232113701	[0, 1, 1, -8506, 299132]	[[53, 0], [52, 11], [55, 26], [50, 36], [33, 235]]
+"238055563.a1"	238055563	[0, 1, 1, -214, 1346]	[[10, 17], [-1, 39], [2, 30], [12, 25], [8, 14]]
+"271522949.a1"	271522949	[0, 1, 1, -332, 2082]	[[13, 11], [6, 18], [3, 33], [8, 1], [17, 40]]
+"288935749.a1"	288935749	[0, 0, 1, -259, 1380]	[[15, 29], [16, 36], [2, 29], [6, 6], [1, 33]]
+
+
+#Label (lmfdb_label) --
+#    The **LMFDB label** of an elliptic curve $E$ over $\mathbb{Q}$ is  a way of indexing the elliptic curves over $\mathbb Q.$ It has the form "11.a1" or "10050.bf2".
+
+#    The label has three components: the **conductor**, the **isogeny class label**, and the **isomorphism class index**.
+
+#    1.  The first component is the decimal representation of the conductor (a positive integer).
+
+#    2. The second component is the isogeny class label, a string which represents the **isogeny class index**,  a non-negative integer encoded
+#    as in base 26 using the 26 symbols a,b,.., z.  The isogeny
+#    classes of elliptic curves with the same conductor are sorted lexicographically by the $q$-expansions of the associated modular forms, and the isogeny class index of each isogeny class of fixed conductor is the index (starting at 0) of the class in this ordering.
+
+#    3. The third component is the decimal representation of the isomorphism class index, a positive integer giving the index of the coefficient vector $[a_1, a_2, a_3, a_4, a_6]$ of the reduced minimal Weierstrass equation of $E$ in a lexicographically sorted list of all the elliptic curves in the isogeny class.
+
+#    The complete label is obtained by concatenating [conductor, ".", isogeny class label, isomorphism class index].
+
+#    Note that this is not the same as the Cremona label, even though for certain curves they only differ in the insertion of the dot "." (for example, "37a1" and "37.a1" are the same curve). The presence of the punctuation "." distinguishes an LMFDB label from a Cremona label.  Cremona labels are only defined for curves of conductor up to 500000.
+
+
+# Conductor --
+#    The **conductor** $N$ of an elliptic curve $E$ defined over $\Q$ is a positive integer divisible by the primes of bad reduction and no others.  It has the form $N=\prod p^{e_p}$, where the exponent $e_p$ is
+
+#    - $e_p=1$ if $E$ has multiplicative reduction at $p$,
+
+#    - $e_p=2$ if $E$ has additive reduction at $p$ and $p\ge5$,
+
+#    - $2\leq e_p\leq 5$ if $E$ has additive reduction and $p=3$, and
+
+#    - $2\leq e_p\leq 8$ if $E$ has additive reduction and $p=2$.
+
+#    For all primes $p$, there is an algorithm of Tate that simultaneously creates a local minimal Weierstrass equation and computes the exponent of the conductor. See:
+
+#    <UL>
+#    <LI> J. Tate, Algorithm for determining the type of a singular fiber
+#    in an elliptic pencil, Modular functions of one variable, IV
+#    (Proc. Internat. Summer School, Univ. Antwerp, Antwerp, 1972),
+#    33-52. <EM>Lecture Notes in Math.</EM>, Vol. <B>476</B>,
+#    Springer, Berlin, 1975. \cite{MR0393039}
+
+#    <LI> J.H. Silverman, <EM>Advanced topics in the arithmetic of elliptic
+#    curves</EM>, GTM <B>151</B>, Springer-Verlag, New York, 1994.\cite{MR1312368}
+
+#    </UL>
+
+
+#Weierstrass equation (ainvs) --
+#    Every elliptic curve over $\mathbb{Q}$ has an integral Weierstrass model (or equation) of the form \[y^2+a_1xy+a_3y=x^3+a_2x^2+a_4x+a_6,\]
+#    where $a_1,a_2,a_3,a_4,a_6$ are integers.
+#    Each such equation has a discriminant $\Delta$.  A **minimal Weierstrass equation** is one for which $|\Delta|$ is minimal among all Weierstrass models for the same curve.  For elliptic curves over $\mathbb{Q}$, minimal models exist, and there is a unique **reduced minimal model** which satisfies the additional constraints $a_1,a_3\in\{0,1\}$, $a_2\in\{-1,0,1\}$.
+
+
+
+#MW-generators (mwgens) --
+#    For an elliptic curve $E$ defined over a field $K$, the **Mordell-Weil group** of $E/K$ is the group $E(K)$ of $K$-rational points of $E$. It is a finitely-generated Abelian group.
+
+#    This is a special case of the Mordell-Weil group of an abelian variety.
+
+#    The Mordell-Weil Theorem, first proved by Mordell for elliptic curves defined over $\Q$ and  later generalized by Weil to abelian varieties $A$ over general number fields $K$, states that, if $K$ is a number field, then $A(K)$ is a finitely generated abelian group. Its rank is called the **Mordell-Weil rank** of $A$ over $K$.
+
+#    The Mordell-Weil theorem implies in particular that the torsion subgroup $E(K)_{\mathrm{tor}}$ of $E(K)$ is finite, and thus that the torsion order of $E$, one of the BSD  invariants, is finite.
+
+
