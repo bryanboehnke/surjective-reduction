@@ -267,17 +267,13 @@ def check(r,p):
 def gather(r, p):
     count  = 0
     surjcount = 0
-    brokencount = 0
     
     # read file
     filestring = "rank" + str(r) + ".txt"
     f = open(filestring, 'r')
     
     # write file
-    # notsurj = open("v3rank" + str(r) + "mod"+ str(p) + "notsurjlabels.txt", 'w')
-
-    # check file?
-    # broken =  open("rank" + str(r) + "mod"+ str(p) + "brokenmwgenlabels.txt", 'w')
+    notsurj = open("rank" + str(r) + "mod"+ str(p) + "notsurjlabels.txt", 'w')
 
     for line in f:
         if line[0] == '"':
@@ -292,7 +288,6 @@ def gather(r, p):
                 # get the E(Fp) dictionary
                 pts = getFpPoints(E,p)
                 N = len(pts)
-                print(N)
 
                 # v1: computing powers of MW gen over Q, reducing each point mod p
                 # for each MW generator, take N powers and look at images
@@ -325,11 +320,11 @@ def gather(r, p):
                 
 
                 # otherwise, not surjective -> store label
-                # else:
-                    # notsurj.write(str(N) + "\t" + line)
+                else:
+                    notsurj.write(str(N) + "\t" + line)
 
-            # if count % 100 == 0:
-            print("Progress: ", count, "elliptic curves analyzed", end= "\r")
+            if count % 100 == 0:
+                print("Progress: ", count, "elliptic curves analyzed", end= "\r")
 
     print("Done! All elliptic curves in file analyzed.", end='\r')
     print()    
@@ -338,7 +333,6 @@ def gather(r, p):
     print("p =", p)
     print("total curves:", count)
     print("surjective count:", surjcount)
-    print("broken count:", brokencount)
     print("percentage:", surjcount/count)
     print("================")
 
@@ -349,15 +343,16 @@ def gather(r, p):
 
 # gather data across all ranks and a specified set of primes
 def main():
-    globalfile = open("v4totaldata.txt", "w")
+    globalfile = open("totaldata.txt", "w")
     
     primes = [2,3,5,7,11,13,101]
     # for each rank
-    for r in range(1,6):
-        for p in primes:
-            (r,p,count,surjcount) = gather(r,p)
-            globalfile.write(str(r) + ", " + str(p)  + ", " + str(count)  + ", " + str(surjcount) + ',' + str(surjcount/count) + "\n")
-    
+    # for r in range(1,2):
+    r=1
+    for p in primes:
+        (r,p,count,surjcount) = gather(r,p)
+        globalfile.write(str(r) + ", " + str(p)  + ", " + str(count)  + ", " + str(surjcount) + ',' + str(surjcount/count) + "\n")
+
     globalfile.close()
 
 
