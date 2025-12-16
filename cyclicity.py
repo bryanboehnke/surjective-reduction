@@ -10,7 +10,7 @@ def gather(r, p):
     
     # read file
     filestring = "lmfdb/rank" + str(r) + ".txt" # checking all rank r ell curves
-    # filestring = "rank" + str(r) + "mod" + str(p) + "notsurjlabels.txt" # checking the ell curves that do not surject onto the image
+    # filestring = "newdata/rank" + str(r) + "mod" + str(p) + "notsurjlabels.txt" # checking the ell curves that do not surject onto the image
     f = open(filestring, 'r')
     
     for line in f:
@@ -87,15 +87,15 @@ def gather(r, p):
 
 # gather data across all ranks and a specified set of primes
 def main():
-    globalfile = open("newdata/totalcyclicdata.txt", "w")
+    globalfile = open("newdata/totalcyclicnotsurjdata.txt", "w")
     
     primes = [2,3,5,7,11,13]
     # for each rank
-    # for r in range(1,2):
-    r=1
-    for p in primes:
-        (r,p,count,cycliccount) = gather(r,p)
-        globalfile.write(str(r) + ", " + str(p)  + ", " + str(count)  + ", " + str(cycliccount) + ',' + str(cycliccount/count) + "\n")
+    for r in range(1,6):
+    # r=1
+        for p in primes:
+            (r,p,count,cycliccount) = gather(r,p)
+            globalfile.write(str(r) + ", " + str(p)  + ", " + str(count)  + ", " + str(cycliccount) + ',' + str(cycliccount/count) + "\n")
 
     globalfile.close()
 

@@ -59,7 +59,7 @@ def gather(r, p):
 # gather data across all ranks and a specified set of primes
 def main():
 
-    globalfile = open('newdata/totalsize.txt', "w")
+    globalfile = open('newdata/totalsizedata.txt', "w")
     
     primes = [2,3,5,7,11,13, 101]
     # for each rank
@@ -67,7 +67,7 @@ def main():
     # r=1
         for p in primes:
             (r,p,sizes) = gather(r,p)
-            globalfile.write(str(r) + ", " + str(p)  + ", " + str(sizes) + "\n")
+            globalfile.write(str(r) + "\t" + str(p)  + "\t" + str(sizes) + "\n")
 
     globalfile.close()
 

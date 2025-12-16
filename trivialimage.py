@@ -1,14 +1,16 @@
+# if E(Q) -> E(F_p) is not surjective, what is the size of the image?
+
 from ec import *
 
 
 # get data for rank r, prime p
-# write list of curves with E(Q) -> E(F_p) not surjective
 def gather(r, p):
     count  = 0
-    surjcount = 0
+    trivcount = 0
     
     # read file
-    filestring = "lmfdb/rank" + str(r) + ".txt"
+    # filestring = "lmfdb/rank" + str(r) + ".txt"
+    filestring = "newdata/rank" + str(r) + "mod"+ str(p) + "notsurjlabels.txt"
     f = open(filestring, 'r')
     
     # write file
@@ -56,14 +58,18 @@ def gather(r, p):
 
                 # if every Fp point has been hit, then all values are > 0
                 if not (0 in pts.values()):
-                    surjcount += 1
+                    imagesize = N
                 
+                else:
+                    imagesize = 0
+                    for key in pts.keys():
+                        if pts[key] > 0:
+                            imagesize+= 1
+                
+                if imagesize == 1:
+                    trivcount += 1
+            
 
-                # otherwise, not surjective -> store label
-                # else:
-                    
-                    # notsurj.write(str(N) + "\t" + line)
-                    # notsurj.write(line)
 
             if count % 100 == 0:
                 print("Progress: ", count, "elliptic curves analyzed", end= "\r")
@@ -74,26 +80,26 @@ def gather(r, p):
     print("r =", r)
     print("p =", p)
     print("total curves:", count)
-    print("surjective count:", surjcount)
-    print("percentage:", surjcount/count)
+    print("trivial reduction count:", trivcount)
+    print("percentage:", trivcount/count)
     print("================")
 
     f.close()
     # notsurj.close()
     # broken.close()
-    return(r, p, count, surjcount)
+    return(r, p, count, trivcount)
 
 # gather data across all ranks and a specified set of primes
 def main():
-    globalfile = open("newdata/totalsurjdata.txt", "w")
+    globalfile = open("newdata/totaltrivdata.txt", "w")
     
     primes = [2,3,5,7,11,13,101]
-    # for each rank
-    for r in range(1,6):
+    # for r = 1 for now
+    for r in range(1,2):
 
         for p in primes:
-            (r,p,count,surjcount) = gather(r,p)
-            globalfile.write(str(r) + ", " + str(p)  + ", " + str(count)  + ", " + str(surjcount) + ',' + str(surjcount/count) + "\n")
+            (r,p,count,trivcount) = gather(r,p)
+            globalfile.write(str(r) + ", " + str(p)  + ", " + str(count)  + ", " + str(trivcount) + ',' + str(trivcount/count) + "\n")
 
     globalfile.close()
 
