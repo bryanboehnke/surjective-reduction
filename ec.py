@@ -30,6 +30,43 @@ def getFpPoints(E, p):
                 pts[(x,y)] = 0
     return pts
 
+# return dict with orders of all points
+def getFpPointOrders(E, p):
+    pts = {}
+    pts['infinity'] = 1 # include the point at infinity
+
+    # reduce coefficients mod p
+    a1 = rationaltoFp(E[0], p)
+    a2 = rationaltoFp(E[1], p)
+    a3 = rationaltoFp(E[2], p)
+    a4 = rationaltoFp(E[3], p)
+    a6 = rationaltoFp(E[4], p)
+
+    # check all pairs (x,y) in Fp x Fp
+    for x in range(p):
+        for y in range(p):
+            # check if equation is satisfied mod p
+            if (( (y**2)%p + (a1*x*y)%p + (a3*y)%p)%p == ((x**3)%p + a2*(x**2)%p + a4*x + a6)%p ):
+                P = [x,y]
+                Q = [x,y]
+                order = 1
+                done = False
+
+                # take powers of P until hit infinity
+                while not done:
+                    order += 1
+                    Q = ellMultFp(E,P,Q,p)
+                    if Q == 'infinity':
+                        done = True
+                    
+                
+                pts[(x,y)] = order                
+
+
+    return pts
+    
+
+
 
 # reference: Silverman AEC III.2.3
 # E elliptic curve, P and Q points on E
