@@ -13,16 +13,17 @@ def check(line):
               101, 103, 107, 109, 113, 127, 131, 137, 139, 149, 151, 157, 163, 167, 173, 179, 181, 191, 193, 197, 199,
               211, 223, 227, 229, 233, 239, 241, 251, 257, 263, 269, 271, 277, 281, 283, 293,
               307, 311, 313, 317, 331, 337, 347, 349, 353, 359, 367, 373, 379, 383, 389, 397,
-              401, 409, 419, 421, 431, 433, 439, 443, 449, 457, 461, 463, 467, 479, 487, 491, 499,
-              503, 509, 521, 523, 541, 547, 557, 563, 569, 571, 577, 587, 593, 599,
-              601, 607, 613, 617, 619, 631, 641, 643, 647, 653, 659, 661, 673, 677, 683, 691,
-              701, 709, 719, 727, 733, 739, 743, 751, 757, 761, 769, 773, 787, 797,
-              809, 811, 821, 823, 827, 829, 839, 853, 857, 859, 863, 877, 881, 883, 887,
-              907, 911, 919, 929, 937, 941, 947, 953, 967, 971, 977, 983, 991, 997
+              401, 409, 419, 421, 431, 433, 439, 443, 449, 457, 461, 463, 467, 479, 487, 491, 499
+            #   503, 509, 521, 523, 541, 547, 557, 563, 569, 571, 577, 587, 593, 599,
+            #   601, 607, 613, 617, 619, 631, 641, 643, 647, 653, 659, 661, 673, 677, 683, 691,
+            #   701, 709, 719, 727, 733, 739, 743, 751, 757, 761, 769, 773, 787, 797,
+            #   809, 811, 821, 823, 827, 829, 839, 853, 857, 859, 863, 877, 881, 883, 887,
+            #   907, 911, 919, 929, 937, 941, 947, 953, 967, 971, 977, 983, 991, 997
             ]    
     surjprimes = []
     notsurjprimes = []
     primeprimes = []
+    print(line)
 
     linedata = line.split('\t')
     conductor = int(linedata[1])
@@ -33,6 +34,9 @@ def check(line):
     # E = [0, 0, 1, -1, 0]
     # conductor = 37
     # gens = [[0,0]]
+
+
+    total = len(primes)
 
     for p in primes:
         print("Analyzing p = ",p, end= "\r")
@@ -50,6 +54,7 @@ def check(line):
                         surjprimes.append(p)
                         primeprimes.append(p)
                         allinf = False
+                        break
 
                 if allinf:
                     print("wow")
@@ -73,34 +78,64 @@ def check(line):
                     surjprimes.append(p)
                 else:
                     notsurjprimes.append(p)
+        else:
+            total -= 1
+        
 
-    print()
-    print(line)
-    print("surj:", len(surjprimes)) #, surjprimes)
-    print("notsurj:", len(notsurjprimes))#, notsurjprimes)
-    print("prime order:", len(primeprimes))#,primeprimes)
-    print("surj percentage:", len(surjprimes)/len(primes))
-    print("prime order percentage:", len(primeprimes)/len(surjprimes))
+    surjcount = len(surjprimes)
+    notsurjcount = len(notsurjprimes)
+    primecount = len(primeprimes)
+    # total = len(primes)
+
+
+    print("\n")
     
-    return(len(surjprimes),len(notsurjprimes),len(primeprimes),len(surjprimes)/len(primes),len(primeprimes)/len(surjprimes))
+    # print("surj:", surjcount)
+    # print("notsurj:", notsurjcount)#, notsurjprimes)
+    # print("prime order:", primecount)#,primeprimes)
+    print("surj percentage:", surjcount/total)
+    # print("prime order percentage:", primecount/surjcount)
+    print("\n")
+    
+    return(str(surjcount) + ", " + str(notsurjcount) + ", " + str(primecount) + ", " + str(surjcount/total) +  "\n")
+
 
 
 def main():
-    writefile = open("newdata/percurvedata.txt", "w")
-    readfile = open("newlmfdb/rank1new.txt", "r")
+
+    writefile = open("newdata/r3percurvedata11:500.txt", "w")
+    readfile = open("newlmfdb/rank3new.txt", "r")
     lines = readfile.readlines()
 
-    for line in lines[12:15]:
-        writefile.write(line)
-        writefile.write(check(line))
-        writefile.write("\n")
-    # check('"37.a1"	37	1	[]	0	[0, 0, 1, -1, 0]	[[0, 0]]')
-    # check('"43.a1"	43	1	[]	0	[0, 1, 1, 0, 0]	[[0, 0]]')
-    # check('"53.a1"	53	1	[]	0	[1, -1, 1, 0, 0]	[[0, 0]]')
-    # check('"57.a1"	57	1	[]	0	[0, -1, 1, -2, 2]	[[2, 1]]')
-    # check('"58.a1"	58	1	[]	0	[1, -1, 0, -1, 1]	[[0, 1]]')
-    # check('"61.a1"	61	1	[]	0	[1, 0, 0, -2, 1]	[[1, 0]]')
+    writefile.write("surjcount, notsurjcount, primeordercount, surjpercentage\n")
 
+    for line in lines[11:500]:
+        linedata = line.split('\t')
+        # just checking torsion-free for now
+        if linedata[3] == "[]":
+            writefile.write(line)
+            writefile.write(check(line))
+            writefile.write("\n")
+
+    writefile.close()
+    readfile.close()
+
+    writefile = open("newdata/r4percurvedata11:500.txt", "w")
+    readfile = open("newlmfdb/rank4new.txt", "r")
+    lines = readfile.readlines()
+
+    writefile.write("surjcount, notsurjcount, primeordercount, surjpercentage\n")
+
+    for line in lines[11:500]:
+        linedata = line.split('\t')
+        # just checking torsion-free for now
+        if linedata[3] == "[]":
+            writefile.write(line)
+            writefile.write(check(line))
+            writefile.write("\n")
+
+    writefile.close()
+    readfile.close()
 
 if __name__ == '__main__':
     main()
