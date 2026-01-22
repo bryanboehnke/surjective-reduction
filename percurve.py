@@ -103,13 +103,13 @@ def check(line):
 
 def main():
 
-    writefile = open("newdata/r3percurvedata11:500.txt", "w")
-    readfile = open("newlmfdb/rank3new.txt", "r")
+    writefile = open("newdata/r1percurvedata500:1000.txt", "w")
+    readfile = open("newlmfdb/rank1new.txt", "r")
     lines = readfile.readlines()
 
     writefile.write("surjcount, notsurjcount, primeordercount, surjpercentage\n")
 
-    for line in lines[11:500]:
+    for line in lines[500:1000]:
         linedata = line.split('\t')
         # just checking torsion-free for now
         if linedata[3] == "[]":
@@ -120,22 +120,22 @@ def main():
     writefile.close()
     readfile.close()
 
-    writefile = open("newdata/r4percurvedata11:500.txt", "w")
-    readfile = open("newlmfdb/rank4new.txt", "r")
-    lines = readfile.readlines()
+    # writefile = open("newdata/r4percurvedata11:500.txt", "w")
+    # readfile = open("newlmfdb/rank4new.txt", "r")
+    # lines = readfile.readlines()
 
-    writefile.write("surjcount, notsurjcount, primeordercount, surjpercentage\n")
+    # writefile.write("surjcount, notsurjcount, primeordercount, surjpercentage\n")
 
-    for line in lines[11:500]:
-        linedata = line.split('\t')
-        # just checking torsion-free for now
-        if linedata[3] == "[]":
-            writefile.write(line)
-            writefile.write(check(line))
-            writefile.write("\n")
+    # for line in lines[11:500]:
+    #     linedata = line.split('\t')
+    #     # just checking torsion-free for now
+    #     if linedata[3] == "[]":
+    #         writefile.write(line)
+    #         writefile.write(check(line))
+    #         writefile.write("\n")
 
-    writefile.close()
-    readfile.close()
+    # writefile.close()
+    # readfile.close()
 
 if __name__ == '__main__':
     main()

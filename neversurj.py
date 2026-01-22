@@ -8,20 +8,24 @@ from sympy.ntheory import isprime
 
 
 def check(line):
+    linedata = line.split('\t')
+    filename = str(linedata[0])
 
-    writefile = open("newdata/324-a1-pointdicts.txt", "w")
-
+    writefile = open("newdata/"+filename+"pointdicts123.txt", "w")
+    writefile.write(line)
+    writefile.write('\n\n')
+    writefile.write('p prime of good reduction, N = #E(F_p), isCyclic, index of E(Q) in E(F_p), order of image of E(Q) \n\n')
     # primes < 1000 aka first 168 primes
     primes = [2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47, 53, 59, 61, 67, 71, 73, 79, 83, 89, 97,
               101, 103, 107, 109, 113, 127, 131, 137, 139, 149, 151, 157, 163, 167, 173, 179, 181, 191, 193, 197, 199,
               211, 223, 227, 229, 233, 239, 241, 251, 257, 263, 269, 271, 277, 281, 283, 293,
               307, 311, 313, 317, 331, 337, 347, 349, 353, 359, 367, 373, 379, 383, 389, 397,
-              401, 409, 419, 421, 431, 433, 439, 443, 449, 457, 461, 463, 467, 479, 487, 491, 499,
-              503, 509, 521, 523, 541, 547, 557, 563, 569, 571, 577, 587, 593, 599,
-              601, 607, 613, 617, 619, 631, 641, 643, 647, 653, 659, 661, 673, 677, 683, 691,
-              701, 709, 719, 727, 733, 739, 743, 751, 757, 761, 769, 773, 787, 797,
-              809, 811, 821, 823, 827, 829, 839, 853, 857, 859, 863, 877, 881, 883, 887,
-              907, 911, 919, 929, 937, 941, 947, 953, 967, 971, 977, 983, 991, 997
+              401, 409, 419, 421, 431, 433, 439, 443, 449, 457, 461, 463, 467, 479, 487, 491, 499
+            #   503, 509, 521, 523, 541, 547, 557, 563, 569, 571, 577, 587, 593, 599,
+            #   601, 607, 613, 617, 619, 631, 641, 643, 647, 653, 659, 661, 673, 677, 683, 691,
+            #   701, 709, 719, 727, 733, 739, 743, 751, 757, 761, 769, 773, 787, 797,
+            #   809, 811, 821, 823, 827, 829, 839, 853, 857, 859, 863, 877, 881, 883, 887,
+            #   907, 911, 919, 929, 937, 941, 947, 953, 967, 971, 977, 983, 991, 997
             ]    
     
     surjprimes = []
@@ -33,39 +37,44 @@ def check(line):
     conductor = int(linedata[1])
     E = eval(linedata[5])
     gens = parseGens(linedata[6])
-    tors = eval(linedata[3])
+    # tors = eval(linedata[3])
 
     # E = [0, 0, 1, -1, 0]
     # conductor = 37
     # gens = [[0,0]]
 
-    indexdict = {}
+    # indexdict = {}
 
     for p in primes:
         print("Analyzing p = ",p, end= "\r")
+
+        orderdict = {}
         if conductor % p != 0:
 
-            # get the E(Fp) dictionary
+            # find orders of all elements (to inefficiently determine group structure)
             pts = getFpPoints(E,p)
             N = len(pts)
+            notcyclic = True
+            for pt in pts:
+                ptModP = pointModP(pt,p)
+                P = ptModP
 
-            # if isprime(N):
-            #     allinf = True
-            #     for gen in gens:
-            #         genModP = pointModP(gen,p)
-            #         if genModP != 'infinity':
-            #             surjprimes.append(p)
-            #             primeprimes.append(p)
-            #             allinf = False
+                # check if pt^{i} = O
+                for i in range(1, N):
+                    if P == "infinity":
+                        orderdict[pt] = i
+                        break
 
-            #     if allinf:
-            #         print("wow")
-            #         notsurjprimes.append(p)
+                    if i == N-1: # if P has N-1 nontrivial powers, then it is necessarily a generator for all E(F_p)
+                        notcyclic = False
+                        orderdict[pt] = N
 
-            
-            # else:
-                # v2: reducing MW gen first, then computing powers of MW gen mod p
 
+                    # compute P^{i+1}
+                    P = ellMultFp(E, P, ptModP,p)
+
+            # redundant coding for now
+            # gather index of image of E(Q)
             for gen in gens:
                 genModP = pointModP(gen,p)
                 P = genModP
@@ -89,11 +98,12 @@ def check(line):
                     if pts[key] > 0:
                         imagesize+= 1
             
-            indexdict[p] = N // imagesize
+            # indexdict[p] = N // imagesize
             
+            writefile.write(str(p) + ', ' + str(N) + ', ' + str(not(notcyclic)) + ', ' + str(N//imagesize) + ', ' + str(imagesize) + '\n')
+            writefile.write(str(orderdict))
+            writefile.write('\n \n')
 
-            writefile.write(pts)
-            writefile.write('\n')
             
 
 
@@ -103,17 +113,21 @@ def check(line):
     # total = len(primes)
 
 
-    print("\n")
+    # print("\n")
     
     # print("surj:", surjcount)
     # print("notsurj:", notsurjcount)#, notsurjprimes)
     # print("prime order:", primecount)#,primeprimes)
     # print("surj percentage:", surjcount/total)
     # print("prime order percentage:", primecount/surjcount)
-    print(indexdict)
+    # print(indexdict)
     print("\n")
     
-    return(indexdict)
+    # return(indexdict)
+    writefile.close()
 
 
-check('"324.a1"	324	1	[]	0	[0, 0, 0, -189, -999]	[[-8, 1]]')
+check('"189.b1"	189	1	[]	0	[0, 0, 1, -3834, -91375]	[[-143/2, -3/2]]')
+check('"254.b1"	254	1	[]	0	[1, 0, 0, -24432, -1471934]	[[-36131/20, 361313/20]]')
+check('"378.b3"	378	1	[]	0	[1, -1, 0, 849, -25939]	[[62, 481]]')
+check('"402.b1"	402	1	[]	0	[1, 0, 1, -10255, -438718]	[[8799/5, 764372/5]]')
