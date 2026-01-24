@@ -62,16 +62,30 @@ def check(line):
 
             
             else:
-                # v2: reducing MW gen first, then computing powers of MW gen mod p
-                for gen in gens:
-                    genModP = pointModP(gen,p)
-                    P = genModP
+                # # v2: reducing MW gen first, then computing powers of MW gen mod p
+                # for gen in gens:
+                #     genModP = pointModP(gen,p)
+                #     P = genModP
 
-                    for i in range(1,N):
-                        if P == "infinity":
-                            break
-                        pts[P] += 1
-                        P = ellMultFp(E, P, genModP,p)
+                #     for i in range(1,N):
+                #         if P == "infinity":
+                #             break
+                #         pts[P] += 1
+                #         P = ellMultFp(E, P, genModP,p)
+
+                # v3: gather reduced MW gens, then compute all products...
+                modpgens = []
+                for gen in gens:
+                    modpgens.append(pointModP(gen,p))
+            
+
+                for i in range(1,N):
+                    if P == "infinity":
+                        break
+                    pts[P] += 1
+                    P = ellMultFp(E, P, genModP,p)
+
+
 
                 # if every Fp point has been hit, then all values are > 0
                 if not (0 in pts.values()):
@@ -103,13 +117,13 @@ def check(line):
 
 def main():
 
-    writefile = open("newdata/r1percurvedata500:1000.txt", "w")
-    readfile = open("newlmfdb/rank1new.txt", "r")
+    writefile = open("neversurjdata/r2percurvedata11:500v2.txt", "w")
+    readfile = open("newlmfdb/rank2new.txt", "r")
     lines = readfile.readlines()
 
     writefile.write("surjcount, notsurjcount, primeordercount, surjpercentage\n")
 
-    for line in lines[500:1000]:
+    for line in lines[11:500]:
         linedata = line.split('\t')
         # just checking torsion-free for now
         if linedata[3] == "[]":
