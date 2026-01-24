@@ -1,4 +1,5 @@
 from fractions import Fraction
+from sympy import *
 
 # throughout: an elliptic curve E with Weierstrass equation: y^2 + a1 xy + a3 y = x^3 + a2 x^2 + a4 x + a6
 # will be stored as E = [a1, a2, a3, a4, a6]
@@ -111,6 +112,49 @@ def ellMult(E, P, Q):
     y3 = -1*(m+a1)* x3 - b - a3
 
     return (x3, y3)
+
+# sympy version
+def ellMultExt(E, P, Q):
+    if P == "infinity":
+        return Q
+    if Q == "infinity":
+        return P
+
+    # casting coordinates to rational numbers 
+    x1 = P[0]
+    y1 = P[1]
+
+    x2 = Q[0]
+    y2 = Q[1]
+
+    a1 = E[0]
+    a2 = E[1]
+    a3 = E[2]
+    a4 = E[3]
+    a6 = E[4]
+
+    # if Q = -P, then P + Q = O
+    if x1 == x2 and y1 + y2 + a1 * x2 + a3 == 0:
+        return "infinity"
+
+    # y = mx + b is the line through P and Q
+
+    # if P = Q, take the tangent line at P
+    if P == Q:
+        m = (3*x1**2 + 2*a2*x1 + a4 - a1*y1) / (2*y1 + a1*x1 + a3)
+        b = (-1*x1**3 + a4*x1 + 2*a6 - a3*y1)/ (2*y1 + a1*x1 + a3)
+    
+    # otherwise, point-slope formula does the trick
+    else:
+        m = (y2 - y1)/ (x2 - x1)
+        b = (y1*x2 - y2*x1) / (x2 - x1)
+
+    # the residual intersection of y = mx + b and the line through P and Q
+    x3 = simplify(m**2 + a1*m - a2 - x1 - x2)
+    y3 = simplify(-1*(m+a1)* x3 - b - a3)
+
+    return (x3, y3)
+
 
 # reference: Silverman AEC III.2.3
 # E elliptic curve, P and Q points on E
@@ -298,3 +342,23 @@ def check(r,p):
     # notsurj.close()
     # broken.close()
     # return(r, p, count, surjcount)
+
+
+# E = [a1, a2, a3, a4, a6]
+def threetorsioncoords(E):
+    a1 = E[0]
+    a2 = E[1]
+    a3 = E[2]
+    a4 = E[3]
+    a6 = E[4]
+
+    b2 = a1**2 + 4*a2
+    b4 = 2*a4 + a1*a3
+    b6 = a3**2 + 4*a6
+    b8 = a1**2 * a6 + 4*a2*a6 - a1*a3*a4 + a2*a3**2 - a4**2
+
+
+    x = Symbol('x')
+    # \psi_3 = 3x^4 + b2 x^3 + 3b4 x^2 + 3b6 x + b8
+    psi3 = Poly([3,b2,3*b4,3*b6, b8], x)
+    return roots(psi3)
