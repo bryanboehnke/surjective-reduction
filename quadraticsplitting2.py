@@ -4,10 +4,17 @@
 from ec import *
 from sympy.ntheory.factor_ import core
 
+# p-adic valuation of x
+def v(p,x):
+    if x ==0  or x % p != 0:
+        return 0
+    else:
+        return 1 + v(p, x//p)
+
+
 # given (integral for now) x, find the residue field for (x, sqrt(f(x)))
 # return m = squarefree part of f(x) (so residue field is Q(sqrt(m)))
 def findQuad(f,x):
-
     eval = x**3 + f[0]*x**2 + f[1] * x + f[2]
     if eval < 0:
         return -1*core(-1*eval, 2)
@@ -17,8 +24,9 @@ def findQuad(f,x):
 
     return core(eval, 2)
 
+
 # check if the appropriate min poly factors over fp
-def splitCompletely(m, p):
+def checkSplitting(m, p):
     distinctFactors = False
     roots = []
     
@@ -44,22 +52,20 @@ def splitCompletely(m, p):
 
     return distinctFactors
 
-def v(p,x):
-    if x ==0  or x % p != 0:
-        return 0
-    else:
-        return 1 + v(p, x//p)
-
 
 def main():
     exes = []
+    p=11
     for i in range(0,1000):
-        if v(3,i) % 2 == 1:
-
-
+        if v(p,i) % 2 == 1:
+            # exes.append(p*i)
+            # exes.append(p*i+1)
+            exes.append(p*(i+5)+2)
+        
+        # exes.append(i)
         # exes.append(4+7*i)
         # exes.append(5+7*i)
-            exes.append(3*i)
+            # exes.append(3*i)
 
     # throughout: an elliptic curve E with Weierstrass equation: y^2 + a1 xy + a3 y = x^3 + a2 x^2 + a4 x + a6
     
@@ -67,19 +73,12 @@ def main():
     # f(x) = x^3 + x^2 - 13x + 15
     
 
-
-    # f = [1,-13,15] # 172a
-
-    # f = [-1,3,9] # 228.a1
-
-    # f = [1,-9,-13] # 209.a2
-    f = [-3,2,0]
-    # f = [-6,5,0]
+    f = [0,1,1]
     E = [0,f[0],0,f[1],f[2]]
 
     for x in exes:
         m = findQuad(f,x)
-        print(x, m, splitCompletely(m,3))
+        print(x, m, checkSplitting(m,p))
 
 
     # [0,f[0], 0, f[1], f[2]]
