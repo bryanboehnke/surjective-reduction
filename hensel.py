@@ -5,10 +5,10 @@
 
 # e.g. f(x) = x^3 + x + 1
 f = [0,1,1]
-p = 11
+p = 3
 
 # root of f(x) in F_p
-tbar = 2
+tbar = 1
 
 # lift to (an approximation of) a root t in Z_p
 t = [tbar]

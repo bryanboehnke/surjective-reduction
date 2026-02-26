@@ -11,6 +11,17 @@ def v(p,x):
     else:
         return 1 + v(p, x//p)
 
+# given integer x, get p-adic decomp
+def padicdecomp(p,x):
+    
+    z = []
+    y =  x
+    while y > 0:
+        rem = y % p
+        z.append(rem)
+        y = y//p
+
+    return z
 
 # given (integral for now) x, find the residue field for (x, sqrt(f(x)))
 # return m = squarefree part of f(x) (so residue field is Q(sqrt(m)))
@@ -56,11 +67,13 @@ def checkSplitting(m, p):
 def main():
     exes = []
     p=11
-    for i in range(0,1000):
-        if v(p,i) % 2 == 1:
+
+
+    for i in range(205):
+        # if v(p,i) % 2 == 1:
             # exes.append(p*i)
             # exes.append(p*i+1)
-            exes.append(p*(i+5)+2)
+        exes.append(p*(i))
         
         # exes.append(i)
         # exes.append(4+7*i)
@@ -74,11 +87,13 @@ def main():
     
 
     f = [0,1,1]
+    # f = [0,3,2]
     E = [0,f[0],0,f[1],f[2]]
 
     for x in exes:
         m = findQuad(f,x)
-        print(x, m, checkSplitting(m,p))
+        # if checkSplitting(m,p) == 'ramified':
+        print(x,padicdecomp(p,int(x)), checkSplitting(m,p))
 
 
     # [0,f[0], 0, f[1], f[2]]
