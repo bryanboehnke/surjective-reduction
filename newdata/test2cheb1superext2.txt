@@ -1,0 +1,7 @@
+#E(F_p)	#E(Q)	index
+totalsplit	totalinert	totalramified	totalsplitpercentage
+split	inert	ramified	splitpercentage
+p = 13799
+13692	2282	6
+6799	6893	0	0.49656733859187846
+1137	1145	0	0.4982471516213848
